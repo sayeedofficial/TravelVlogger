@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
+    private  BlogPreference preferences;
     private TextInputLayout textUsernameInput;
     private TextInputLayout textPasswordInput;
     private  Button loginButton;
@@ -25,6 +26,14 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_login);
+
+        preferences = new BlogPreference(this);
+        if(preferences.isLoggenIn()){
+            startMainActivity();
+            finish();
+            return;
+        }
+
         textUsernameInput = findViewById(R.id.textUsernameLayout);
         textPasswordInput = findViewById((R.id.textPasswordInput));
          loginButton = findViewById(R.id.loginButton);
@@ -56,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
     private void performLogin(){
+        preferences.setLoggenIn(true);
         loginButton.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
         textUsernameInput.setEnabled(false);
